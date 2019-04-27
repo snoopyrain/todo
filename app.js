@@ -22,6 +22,11 @@ db.once('open', ()=>{
 
 //    載入 todo model
 const Todo = require('./models/todo');
+
+//  引用 body-parser
+const bodyParser = require('body-parser');
+// 設定bodyParser
+app.use(bodyParser.urlencoded({extended:true}));
 // Todo 首頁
 app.get('/',(req, res)=>{
   Todo.find((err, todos)=>{
@@ -38,11 +43,18 @@ app.get('/todos',(req, res)=>{
 })
 //新增一筆 Todo 頁面
 app.get('/todos/new', (req, res) => {
-  res.send('新增todo')
+  return res.render('new')
 })
 //新增一筆 Todo
 app.post('/todos', (req, res) => {
-  res.send('建立todo')
+  const todo=Todo({
+    name: req.body.name,
+  })
+  todo.save(err =>{
+    if(err) return console.error(err)
+    return res.redirect('/')
+  })
+  
 })
 
 
