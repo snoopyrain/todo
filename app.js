@@ -24,7 +24,13 @@ db.once('open', ()=>{
 const Todo = require('./models/todo');
 // Todo 首頁
 app.get('/',(req, res)=>{
-  return res.render('index')
+  Todo.find((err, todos)=>{
+    //把todo model 所有資料都抓回來
+    if (err) return console.error(err)
+    return res.render('index', { todos: todos })
+    //將資料傳給index 樣板 變數 todos
+  })
+ 
 })
 //列出全部 Todo
 app.get('/todos',(req, res)=>{
