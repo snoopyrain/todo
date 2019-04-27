@@ -5,6 +5,11 @@ const app = express()
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://127.0.0.1/todo',{useNewUrlParser: true})
 
+//handlebars
+const exphbs = require('express-handlebars')
+app.engine('handlebars', exphbs({defaultLayout: 'main'}))
+app.set('view engine', 'handlebars')
+
 const db = mongoose.connection
 
 db.on('error', ()=>{
@@ -19,7 +24,7 @@ db.once('open', ()=>{
 const Todo = require('./models/todo');
 // Todo 首頁
 app.get('/',(req, res)=>{
-  res.send('hello world!')
+  return res.render('index')
 })
 //列出全部 Todo
 app.get('/todos',(req, res)=>{
