@@ -11,7 +11,7 @@ router.post('/login', (req, res)=>{
   res.send('login')
 })
 //註冊頁面
-router.get('register', (req, res)=>{
+router.get('/register', (req, res)=>{
   res.render('register')
 })
 
