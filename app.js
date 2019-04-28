@@ -29,8 +29,10 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended:true}));
 // Todo 首頁
 app.get('/',(req, res)=>{
-  Todo.find((err, todos)=>{
     //把todo model 所有資料都抓回來
+  Todo.find({})
+    .sort({name: 'asc'})
+    .exec((err, todos)=>{
     if (err) return console.error(err)
     return res.render('index', { todos: todos })
     //將資料傳給index 樣板 變數 todos
