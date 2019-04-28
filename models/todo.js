@@ -4,6 +4,10 @@ const todoSchema = new Schema({
   name:{
     type: String,
     require: true,
+  },
+  done: {  //完成狀態
+    type: Boolean,
+    default: false, // 預設完成狀態為false
   }
 })
 
