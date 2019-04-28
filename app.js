@@ -32,8 +32,10 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended:true}));
 // Todo 首頁
 
+//設定路由
 app.use('/', require('./routes/home'))
 app.use('/todos', require('./routes/todo'))
+app.use('/users', require('./routes/user'))
 app.listen(3000, ()=>{
   console.log('app is runing')
 })
