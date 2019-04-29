@@ -53,6 +53,7 @@ router.post('/register', (req, res)=>{
 // 登出
 router.get('/logout', (req, res)=>{
   res.send('logout')
+  res.redirect('/users/login')
 })
 
 module.exports = router
