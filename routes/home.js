@@ -1,9 +1,11 @@
 const express = require('express')
 const router =express.Router()
 const Todo = require('../models/todo')
+// 載入 auth middleware
+const {authenticated }= require('../config/auth')
+// 加入authenticated 驗證
 //設定首頁路由器
-
-router.get('/', (req, res) => {
+router.get('/', authenticated, (req, res) => {
   //把todo model 所有資料都抓回來
   Todo.find({})
     .sort({ name: 'asc' })

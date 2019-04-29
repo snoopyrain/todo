@@ -1,8 +1,9 @@
 module.exports ={
-  auth: (req, res, next)=>{
+  authenticated: (req, res, next)=>{
     if (req.isAuthenticated()){
       return next()
     }
+    res.redirect('/users/login')
     //send error message
   }
 }
