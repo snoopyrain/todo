@@ -1,6 +1,25 @@
 const express = require('express')
 const app = express()
+// 載入 express-session 與 passport
+const session = require ('express-session')
+const passport = require('passport')
+//使用express session
+app.use(session({
+  secret: 'your secret key',
+}))
 
+// 使用 Passport
+app.use(passport.initialize())
+app.use(passport.session())
+
+
+// 載入 Passport config
+require('./config/passport')(passport)
+// 登入後可以取得使用者的資訊方便我們在view 裡面直接使用
+app.use((req, res, next)=>{
+  res.locals.user = req.user
+  next()
+})
 //db mongoose setting
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://127.0.0.1/todo',{useNewUrlParser: true})
