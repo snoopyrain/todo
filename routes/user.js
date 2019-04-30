@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const passport = require ('passport') //載入 passport
+const bcrypt = require('bcryptjs') // 載入 bcryptjs library
 const User = require('../models/user')
 //登入頁面
 router.get('/login', (req,res)=>{
@@ -39,13 +40,24 @@ router.post('/register', (req, res)=>{
         email,
         password,
       })
-      newUser.save().then(user=>{
-        res.redirect('/')
-      })
-      .catch(err=>console.log(err))
-      //如果email 不存在就新增使用者 
-      //新增完成後導回首頁
-      console.log("save user")
+
+      //先用 genSalt 產生鹽 第一個參數是複雜係數 預設是10
+      bcrypt.genSalt(10, (err, salt)=>
+      //再用hash 把鹽和使用者的密碼配再一起，然後產生雜揍處理後的hash
+      bcrypt.hash(newUser.password, salt, (err, hash)=>{
+        if(err) throw err
+        newUser.password = hash
+        // 用 bcrypt 處理密碼後 再把它儲存起來
+        
+        newUser.save().then(user => {
+          res.redirect('/')
+        })
+          .catch(err => console.log(err))
+        //如果email 不存在就新增使用者 
+        //新增完成後導回首頁
+        console.log("save user")
+
+      }))
     }
   })
   
