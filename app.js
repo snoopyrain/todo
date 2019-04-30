@@ -5,7 +5,9 @@ const session = require ('express-session')
 const passport = require('passport')
 //使用express session
 app.use(session({
-  secret: 'your secret key',
+  secret: 'your secret key', //secret: 定義一組自己的私鑰 （字串）
+  resave: 'false',
+  saveUninitialized: 'false',
 }))
 
 // 使用 Passport
@@ -30,7 +32,7 @@ app.use((req, res, next)=>{
 })
 //db mongoose setting
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://127.0.0.1/todo',{useNewUrlParser: true})
+mongoose.connect('mongodb://127.0.0.1/todo',{useNewUrlParser: true, useCreateIndex:true})
 // 引用  method-override
 const methodOverride = require('method-override')
 // 設定method-overrides
