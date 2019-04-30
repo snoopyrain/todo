@@ -1,5 +1,10 @@
 const express = require('express')
 const app = express()
+//判別開發環境
+if (process.env.NODE_ENV !=='production'){
+  require('dotenv').config()  // 如果不是production模式 使用dotenv讀取 .env 檔案
+}
+
 // 載入 express-session 與 passport
 const session = require ('express-session')
 const passport = require('passport')
@@ -65,6 +70,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use('/', require('./routes/home'))
 app.use('/todos', require('./routes/todo'))
 app.use('/users', require('./routes/user'))
+app.use('/auth', require('./routes/auths'))
 app.listen(3000, ()=>{
   console.log('app is runing')
 })
